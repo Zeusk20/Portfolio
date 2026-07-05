@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Faisal Kamran — Support Ops Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#12181f;
+    --panel:#1a222b;
+    --parchment:#f2efe7;
+    --slate:#8a94a3;
+    --slate-light:#c3ccd6;
+    --teal:#2dd4bf;
+    --amber:#f5a623;
+    --coral:#e1523d;
+    --line: rgba(242,239,231,0.12);
+    --radius: 3px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--slate-light);
+    font-family:'Inter',sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Space Grotesk',sans-serif;
+    color:var(--parchment);
+    margin:0;
+  }
+  .mono{font-family:'JetBrains Mono',monospace;}
+  a{color:inherit;}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 28px;}
+
+  /* ---------- Top bar ---------- */
+  .topbar{
+    border-bottom:1px solid var(--line);
+    padding:18px 0;
+    position:sticky; top:0;
+    background:rgba(18,24,31,0.92);
+    backdrop-filter:blur(8px);
+    z-index:50;
+  }
+  .topbar .wrap{display:flex; align-items:center; justify-content:space-between;}
+  .brand{font-family:'JetBrains Mono',monospace; font-size:14px; color:var(--parchment); letter-spacing:0.5px;}
+  .brand span{color:var(--teal);}
+  .status-pill{
+    display:flex; align-items:center; gap:8px;
+    font-family:'JetBrains Mono',monospace; font-size:12px;
+    color:var(--teal); border:1px solid rgba(45,212,191,0.35);
+    padding:6px 12px; border-radius:20px;
+    background:rgba(45,212,191,0.06);
+  }
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--teal); box-shadow:0 0 0 rgba(45,212,191,0.5); animation:pulse 2.4s infinite;}
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(45,212,191,0.45);}
+    70%{box-shadow:0 0 0 8px rgba(45,212,191,0);}
+    100%{box-shadow:0 0 0 0 rgba(45,212,191,0);}
+  }
+  @media (prefers-reduced-motion: reduce){ .dot{animation:none;} }
+
+  /* ---------- Hero ---------- */
+  .hero{padding:88px 0 64px;}
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--slate);
+    text-transform:uppercase; letter-spacing:1.5px; margin-bottom:18px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{content:''; width:24px; height:1px; background:var(--slate);}
+  .hero h1{font-size:52px; line-height:1.08; font-weight:600; max-width:760px;}
+  .hero h1 em{font-style:normal; color:var(--teal);}
+  .hero p.role{font-size:19px; color:var(--slate-light); max-width:600px; margin-top:20px;}
+  .hero p.sub{font-size:15px; color:var(--slate); max-width:560px; margin-top:14px;}
+  .hero-cta{margin-top:32px; display:flex; gap:14px; flex-wrap:wrap;}
+  .btn{
+    font-family:'JetBrains Mono',monospace; font-size:13px;
+    padding:11px 20px; border-radius:var(--radius);
+    text-decoration:none; display:inline-flex; align-items:center; gap:8px;
+    transition:transform .15s ease, background .15s ease;
+  }
+  .btn-primary{background:var(--teal); color:#0a1210; font-weight:600;}
+  .btn-primary:hover{transform:translateY(-1px); background:#4de0cc;}
+  .btn-ghost{border:1px solid var(--line); color:var(--slate-light);}
+  .btn-ghost:hover{border-color:var(--slate-light); transform:translateY(-1px);}
+
+  /* ---------- Metrics strip ---------- */
+  .metrics{
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+    padding:28px 0;
+  }
+  .metrics .wrap{display:grid; grid-template-columns:repeat(4,1fr); gap:20px;}
+  .metric .num{font-family:'Space Grotesk',sans-serif; font-size:28px; font-weight:600; color:var(--parchment);}
+  .metric .label{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--slate); text-transform:uppercase; letter-spacing:0.5px; margin-top:4px;}
+  @media (max-width:720px){ .metrics .wrap{grid-template-columns:repeat(2,1fr);} }
+
+  /* ---------- Queue section ---------- */
+  .queue-section{padding:80px 0 40px;}
+  .section-head{display:flex; align-items:baseline; justify-content:space-between; margin-bottom:36px; flex-wrap:wrap; gap:10px;}
+  .section-head h2{font-size:28px;}
+  .section-head .count{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--slate);}
+
+  .ticket{
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    margin-bottom:16px;
+    background:var(--panel);
+    overflow:hidden;
+    opacity:0; transform:translateY(14px);
+    transition:opacity .5s ease, transform .5s ease;
+  }
+  .ticket.in-view{opacity:1; transform:translateY(0);}
+
+  .ticket-head{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 22px; cursor:pointer; gap:16px; flex-wrap:wrap;
+  }
+  .ticket-id{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--slate);}
+  .ticket-title-group{display:flex; flex-direction:column; gap:4px;}
+  .ticket-title{font-family:'Space Grotesk',sans-serif; font-size:18px; color:var(--parchment); font-weight:600;}
+  .ticket-company{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--teal);}
+  .ticket-meta{display:flex; align-items:center; gap:10px; flex-shrink:0;}
+  .tag{
+    font-family:'JetBrains Mono',monospace; font-size:11px;
+    padding:4px 10px; border-radius:20px; text-transform:uppercase; letter-spacing:0.4px;
+  }
+  .tag-resolved{background:rgba(45,212,191,0.12); color:var(--teal); border:1px solid rgba(45,212,191,0.35);}
+  .tag-priority-high{background:rgba(225,82,61,0.12); color:var(--coral); border:1px solid rgba(225,82,61,0.35);}
+  .tag-priority-med{background:rgba(245,166,35,0.12); color:var(--amber); border:1px solid rgba(245,166,35,0.35);}
+  .chevron{color:var(--slate); transition:transform .25s ease; font-size:14px;}
+  .ticket.open .chevron{transform:rotate(180deg);}
+
+  .ticket-body{
+    max-height:0; overflow:hidden;
+    transition:max-height .35s ease;
+    border-top:1px solid transparent;
+  }
+  .ticket.open .ticket-body{border-top:1px solid var(--line);}
+  .ticket-body-inner{padding:22px; display:grid; grid-template-columns:1.3fr 1fr; gap:28px;}
+  @media (max-width:720px){ .ticket-body-inner{grid-template-columns:1fr;} }
+  .ticket-body-inner h4{
+    font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--slate);
+    text-transform:uppercase; letter-spacing:0.6px; margin-bottom:10px;
+  }
+  .ticket-body-inner p{font-size:14px; color:var(--slate-light); margin:0 0 8px;}
+  .resolution-log{border-left:2px solid var(--teal); padding-left:14px;}
+  .resolution-log p{font-size:14px;}
+  .stat-block{display:flex; flex-direction:column; gap:14px;}
+  .stat-row{display:flex; align-items:baseline; gap:10px;}
+  .stat-row .n{font-family:'Space Grotesk',sans-serif; font-size:22px; color:var(--parchment); font-weight:600;}
+  .stat-row .d{font-size:12px; color:var(--slate);}
+
+  /* ---------- Stack section ---------- */
+  .stack-section{padding:60px 0;}
+  .stack-grid{display:flex; flex-wrap:wrap; gap:10px; margin-top:24px;}
+  .stack-item{
+    font-family:'JetBrains Mono',monospace; font-size:13px;
+    border:1px solid var(--line); padding:9px 16px; border-radius:var(--radius);
+    color:var(--slate-light);
+  }
+
+  /* ---------- Footer / contact ---------- */
+  .contact-section{padding:80px 0 60px; border-top:1px solid var(--line); margin-top:20px;}
+  .contact-box{
+    background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+    padding:44px; text-align:left;
+  }
+  .contact-box .ticket-id{margin-bottom:14px; display:block;}
+  .contact-box h2{font-size:26px; margin-bottom:12px;}
+  .contact-box p{color:var(--slate-light); max-width:480px; margin-bottom:26px;}
+  footer{padding:30px 0 60px; font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--slate); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="brand">FK<span>//</span>OPS-QUEUE</div>
+    <div class="status-pill"><span class="dot"></span> OPEN TO NEW ROLES</div>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">SUPPORT OPERATIONS &amp; CUSTOMER EXPERIENCE</div>
+    <h1>Faisal Kamran resolves the tickets<br>everyone else <em>escalates</em>.</h1>
+    <p class="role">Senior Support Consultant based in Kolkata, India — five years across refunds, rebookings, community moderation, and high-volume queues.</p>
+    <p class="sub">B.Com (Hons) in Accounting &amp; Finance, University of Calcutta. Bilingual in English and Hindi. Currently looking toward Team Lead roles at the intersection of CS operations and finance.</p>
+    <div class="hero-cta">
+      <a href="#queue" class="btn btn-primary">View case queue ↓</a>
+      <a href="#contact" class="btn btn-ghost">Open a ticket →</a>
+    </div>
+  </div>
+</section>
+
+<section class="metrics">
+  <div class="wrap">
+    <div class="metric"><div class="num">29+</div><div class="label">Trustpilot mentions, most of any agent</div></div>
+    <div class="metric"><div class="num">90%+</div><div class="label">Call resolution rate, Amazon</div></div>
+    <div class="metric"><div class="num">100K+</div><div class="label">Community members moderated</div></div>
+    <div class="metric"><div class="num">1.3M+</div><div class="label">Units sold on title under moderation</div></div>
+  </div>
+</section>
+
+<section class="queue-section" id="queue">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Case queue</h2>
+      <div class="count">5 tickets · all resolved</div>
+    </div>
+
+    <div class="ticket" data-ticket>
+      <div class="ticket-head" data-toggle>
+        <div class="ticket-title-group">
+          <span class="ticket-id">TICKET-001</span>
+          <span class="ticket-title">Refunds &amp; rebookings, solo-owned</span>
+          <span class="ticket-company">SupportYourApp — Vio.com account</span>
+        </div>
+        <div class="ticket-meta">
+          <span class="tag tag-priority-high">High priority</span>
+          <span class="tag tag-resolved">Resolved</span>
+          <span class="chevron">▾</span>
+        </div>
+      </div>
+      <div class="ticket-body">
+        <div class="ticket-body-inner">
+          <div>
+            <h4>Context</h4>
+            <p>Sole agent handling rebookings for the Vio.com travel account, and among the first selected onto a newly formed specialized Refunds team.</p>
+            <h4>Resolution</h4>
+            <div class="resolution-log">
+              <p>Became the most-mentioned agent on Trustpilot across a full year — a signal that customers noticed the difference on a category (travel disruptions) where patience runs thin.</p>
+            </div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-row"><span class="n">29+</span><span class="d">named Trustpilot mentions in one year</span></div>
+            <div class="stat-row"><span class="n">1st</span><span class="d">agent selected for the Refunds team</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ticket" data-ticket>
+      <div class="ticket-head" data-toggle>
+        <div class="ticket-title-group">
+          <span class="ticket-id">TICKET-002</span>
+          <span class="ticket-title">Moderating communities at scale</span>
+          <span class="ticket-company">2K Games — freelance content moderation</span>
+        </div>
+        <div class="ticket-meta">
+          <span class="tag tag-priority-high">High priority</span>
+          <span class="tag tag-resolved">Resolved</span>
+          <span class="chevron">▾</span>
+        </div>
+      </div>
+      <div class="ticket-body">
+        <div class="ticket-body-inner">
+          <div>
+            <h4>Context</h4>
+            <p>Freelance moderation across Discord and Steam for a title with a large, high-engagement player base — the kind of environment where policy has to hold up under volume and provocation.</p>
+            <h4>Resolution</h4>
+            <div class="resolution-log">
+              <p>Kept two 50,000-member Discord communities and Steam discussion spaces for a 1.3M+ unit title inside policy without needing to lock threads down.</p>
+            </div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-row"><span class="n">2×</span><span class="d">50,000-member Discord communities</span></div>
+            <div class="stat-row"><span class="n">1.3M+</span><span class="d">copies sold on the moderated title</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ticket" data-ticket>
+      <div class="ticket-head" data-toggle>
+        <div class="ticket-title-group">
+          <span class="ticket-id">TICKET-003</span>
+          <span class="ticket-title">Consistency at volume</span>
+          <span class="ticket-company">Amazon — customer support</span>
+        </div>
+        <div class="ticket-meta">
+          <span class="tag tag-priority-med">Standard</span>
+          <span class="tag tag-resolved">Resolved</span>
+          <span class="chevron">▾</span>
+        </div>
+      </div>
+      <div class="ticket-body">
+        <div class="ticket-body-inner">
+          <div>
+            <h4>Context</h4>
+            <p>High-volume phone support where consistency matters more than any single save — the metric that separates good agents from good weeks.</p>
+            <h4>Resolution</h4>
+            <div class="resolution-log">
+              <p>Held call resolution above 90% sustained over the role, not as a one-off spike.</p>
+            </div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-row"><span class="n">90%+</span><span class="d">call resolution rate</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ticket" data-ticket>
+      <div class="ticket-head" data-toggle>
+        <div class="ticket-title-group">
+          <span class="ticket-id">TICKET-004</span>
+          <span class="ticket-title">Owning the graveyard shift</span>
+          <span class="ticket-company">Swiggy — customer support</span>
+        </div>
+        <div class="ticket-meta">
+          <span class="tag tag-priority-med">Standard</span>
+          <span class="tag tag-resolved">Resolved</span>
+          <span class="chevron">▾</span>
+        </div>
+      </div>
+      <div class="ticket-body">
+        <div class="ticket-body-inner">
+          <div>
+            <h4>Context</h4>
+            <p>Night-shift food delivery support — thinner staffing, more time-sensitive complaints, less room to pass a ticket along.</p>
+            <h4>Resolution</h4>
+            <div class="resolution-log">
+              <p>Posted the highest daily ticket resolution count on the graveyard shift, on a queue where most agents' numbers dip.</p>
+            </div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-row"><span class="n">#1</span><span class="d">daily ticket resolution, night shift</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ticket" data-ticket>
+      <div class="ticket-head" data-toggle>
+        <div class="ticket-title-group">
+          <span class="ticket-id">TICKET-005</span>
+          <span class="ticket-title">Where the queue started</span>
+          <span class="ticket-company">Zomato — customer support</span>
+        </div>
+        <div class="ticket-meta">
+          <span class="tag tag-priority-med">Standard</span>
+          <span class="tag tag-resolved">Resolved</span>
+          <span class="chevron">▾</span>
+        </div>
+      </div>
+      <div class="ticket-body">
+        <div class="ticket-body-inner">
+          <div>
+            <h4>Context</h4>
+            <p>Early support role handling day-to-day order and delivery issues for Zomato customers — the ground floor where the habits in every ticket above were built.</p>
+            <h4>Resolution</h4>
+            <div class="resolution-log">
+              <p>Built the fundamentals of fast, calm resolution that carried through into every higher-stakes queue since.</p>
+            </div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-row"><span class="n">01</span><span class="d">first entry in the queue</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="stack-section">
+  <div class="wrap">
+    <div class="section-head"><h2>Tools in the stack</h2></div>
+    <div class="stack-grid">
+      <span class="stack-item">Zendesk</span>
+      <span class="stack-item">Aircall</span>
+      <span class="stack-item">CC Connect</span>
+      <span class="stack-item">AC3</span>
+      <span class="stack-item">Slack</span>
+      <span class="stack-item">MS Office Suite</span>
+      <span class="stack-item">Google Suite</span>
+      <span class="stack-item">Discord Moderation Tools</span>
+    </div>
+  </div>
+</section>
+
+<section class="contact-section" id="contact">
+  <div class="wrap">
+    <div class="contact-box">
+      <span class="ticket-id">TICKET-006 · NEW</span>
+      <h2>Open a ticket.</h2>
+      <p>Looking for a Senior Support Consultant, Team Lead, or CS/content moderation hire? This queue has room for one more.</p>
+      <a href="mailto:hello@example.com" class="btn btn-primary">Email Faisal →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%;">
+    <span>Kolkata, West Bengal, India</span>
+    <span>© 2026 Faisal Kamran</span>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('[data-toggle]').forEach(head => {
+    head.addEventListener('click', () => {
+      const ticket = head.closest('[data-ticket]');
+      const body = ticket.querySelector('.ticket-body');
+      const isOpen = ticket.classList.contains('open');
+      if(isOpen){
+        ticket.classList.remove('open');
+        body.style.maxHeight = null;
+      } else {
+        ticket.classList.add('open');
+        body.style.maxHeight = body.scrollHeight + 'px';
+      }
+    });
+  });
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in-view'); });
+  }, {threshold:0.1});
+  document.querySelectorAll('[data-ticket]').forEach(t => io.observe(t));
+</script>
+
+</body>
+</html>

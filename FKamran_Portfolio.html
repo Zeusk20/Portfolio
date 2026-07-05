@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Faisal Kamran — Support Ops Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#12181f;
+    --panel:#1a222b;
+    --parchment:#f2efe7;
+    --slate:#8a94a3;
+    --slate-light:#c3ccd6;
+    --teal:#2dd4bf;
+    --amber:#f5a623;
+    --coral:#e1523d;
+    --line: rgba(242,239,231,0.12);
+    --radius: 3px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--slate-light);
+    font-family:'Inter',sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Space Grotesk',sans-serif;
+    color:var(--parchment);
+    margin:0;
+  }
+  .mono{font-family:'JetBrains Mono',monospace;}
+  a{color:inherit;}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 28px;}
+
+  /* ---------- Top bar ---------- */
+  .topbar{
+    border-bottom:1px solid var(--line);
+    padding:18px 0;
+    position:sticky; top:0;
+    background:rgba(18,24,31,0.92);
+    backdrop-filter:blur(8px);
+    z-index:50;
+  }
+  .topbar .wrap{display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;}
+  .brand{font-family:'JetBrains Mono',monospace; font-size:14px; color:var(--parchment); letter-spacing:0.5px;}
+  .brand span{color:var(--teal);}
+  .topbar-right{display:flex; align-items:center; gap:14px;}
+  .icon-link{
+    display:flex; align-items:center; gap:6px;
+    font-family:'JetBrains Mono',monospace; font-size:12px;
+    color:var(--slate-light); border:1px solid var(--line);
+    padding:6px 12px; border-radius:20px;
+    text-decoration:none; transition:border-color .15s ease, color .15s ease;
+  }
+  .icon-link:hover{border-color:var(--teal); color:var(--teal);}
+  .status-pill{
+    display:flex; align-items:center; gap:8px;
+    font-family:'JetBrains Mono',monospace; font-size:12px;
+    color:var(--teal); border:1px solid rgba(45,212,191,0.35);
+    padding:6px 12px; border-radius:20px;
+    background:rgba(45,212,191,0.06);
+  }
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--teal); box-shadow:0 0 0 rgba(45,212,191,0.5); animation:pulse 2.4s infinite;}
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(45,212,191,0.45);}
+    70%{box-shadow:0 0 0 8px rgba(45,212,191,0);}
+    100%{box-shadow:0 0 0 0 rgba(45,212,191,0);}
+  }
+  @media (prefers-reduced-motion: reduce){ .dot{animation:none;} }
+
+  /* ---------- Hero ---------- */
+  .hero{padding:88px 0 64px;}
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--slate);
+    text-transform:uppercase; letter-spacing:1.5px; margin-bottom:18px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{content:''; width:24px; height:1px; background:var(--slate);}
+  .hero h1{font-size:52px; line-height:1.08; font-weight:600; max-width:760px;}
+  .hero h1 em{font-style:normal; color:var(--teal);}
+  .hero p.role{font-size:19px; color:var(--slate-light); max-width:600px; margin-top:20px;}
+  .hero p.sub{font-size:15px; color:var(--slate); max-width:560px; margin-top:14px;}
+  .hero-cta{margin-top:32px; display:flex; gap:14px; flex-wrap:wrap;}
+  .btn{
+    font-family:'JetBrains Mono',monospace; font-size:13px;
+    padding:11px 20px; border-radius:var(--radius);
+    text-decoration:none; display:inline-flex; align-items:center; gap:8px;
+    transition:transform .15s ease, background .15s ease;
+  }
+  .btn-primary{background:var(--teal); color:#0a1210; font-weight:600;}
+  .btn-primary:hover{transform:translateY(-1px); background:#4de0cc;}
+  .btn-ghost{border:1px solid var(--line); color:var(--slate-light);}
+  .btn-ghost:hover{border-color:var(--slate-light); transform:translateY(-1px);}
+
+  /* ---------- Metrics strip ---------- */
+  .metrics{
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+    padding:28px 0;
+  }
+  .metrics .wrap{display:grid; grid-template-columns:repeat(6,1fr); gap:20px;}
+  .metric .num{font-family:'Space Grotesk',sans-serif; font-size:28px; font-weight:600; color:var(--parchment);}
+  .metric .label{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--slate); text-transform:uppercase; letter-spacing:0.5px; margin-top:4px;}
+  @media (max-width:900px){ .metrics .wrap{grid-template-columns:repeat(3,1fr);} }
+  @media (max-width:560px){ .metrics .wrap{grid-template-columns:repeat(2,1fr);} }
+
+  /* ---------- Queue section ---------- */
+  .queue-section{padding:80px 0 40px;}
+  .section-head{display:flex; align-items:baseline; justify-content:space-between; margin-bottom:36px; flex-wrap:wrap; gap:10px;}
+  .section-head h2{font-size:28px;}
+  .section-head .count{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--slate);}
+
+  .ticket{
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    margin-bottom:16px;
+    background:var(--panel);
+    overflow:hidden;
+    opacity:0; transform:translateY(14px);
+    transition:opacity .5s ease, transform .5s ease;
+  }
+  .ticket.in-view{opacity:1; transform:translateY(0);}
+
+  .ticket-head{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 22px; cursor:pointer; gap:16px; flex-wrap:wrap;
+  }
+  .ticket-id{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--slate);}
+  .ticket-title-group{display:flex; flex-direction:column; gap:4px;}
+  .ticket-title{font-family:'Space Grotesk',sans-serif; font-size:18px; color:var(--parchment); font-weight:600;}
+  .ticket-company{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--teal);}
+  .ticket-meta{display:flex; align-items:center; gap:10px; flex-shrink:0;}
+  .tag{
+    font-family:'JetBrains Mono',monospace; font-size:11px;
+    padding:4px 10px; border-radius:20px; text-transform:uppercase; letter-spacing:0.4px;
+  }
+  .tag-resolved{background:rgba(45,212,191,0.12); color:var(--teal); border:1px solid rgba(45,212,191,0.35);}
+  .tag-priority-high{background:rgba(225,82,61,0.12); color:var(--coral); border:1px solid rgba(225,82,61,0.35);}
+  .tag-priority-med{background:rgba(245,166,35,0.12); color:var(--amber); border:1px solid rgba(245,166,35,0.35);}
+  .tag-priority-sustained{background:rgba(139,146,163,0.12); color:var(--slate-light); border:1px solid rgba(139,146,163,0.35);}
+  .chevron{color:var(--slate); transition:transform .25s ease; font-size:14px;}
+  .ticket.open .chevron{transform:rotate(180deg);}
+
+  .ticket-body{
+    max-height:0; overflow:hidden;
+    transition:max-height .35s ease;
+    border-top:1px solid transparent;
+  }
+  .ticket.open .ticket-body{border-top:1px solid var(--line);}
+  .ticket-body-inner{padding:22px; display:grid; grid-template-columns:1.3fr 1fr; gap:28px;}
+  @media (max-width:720px){ .ticket-body-inner{grid-template-columns:1fr;} }
+  .ticket-body-inner h4{
+    font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--slate);
+    text-transform:uppercase; letter-spacing:0.6px; margin-bottom:10px;
+  }
+  .ticket-body-inner p{font-size:14px; color:var(--slate-light); margin:0 0 8px;}
+  .resolution-log{border-left:2px solid var(--teal); padding-left:14px;}
+  .resolution-log p{font-size:14px;}
+  .stat-block{display:flex; flex-direction:column; gap:14px;}
+  .stat-row{display:flex; align-items:baseline; gap:10px;}
+  .stat-row .n{font-family:'Space Grotesk',sans-serif; font-size:22px; color:var(--parchment); font-weight:600;}
+  .stat-row .d{font-size:12px; color:var(--slate);}
+
+  /* ---------- Feedback log section ---------- */
+  .feedback-section{padding:80px 0;}
+  .feedback-cta-row{display:flex; gap:12px; flex-wrap:wrap; margin-bottom:36px;}
+  .feedback-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+  @media (max-width:860px){ .feedback-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:600px){ .feedback-grid{grid-template-columns:1fr;} }
+  .fb-card{
+    border:1px solid var(--line); border-radius:var(--radius);
+    background:var(--panel); padding:20px;
+    display:flex; flex-direction:column; gap:12px;
+    opacity:0; transform:translateY(14px);
+    transition:opacity .5s ease, transform .5s ease, border-color .15s ease;
+    text-decoration:none;
+  }
+  a.fb-card:hover{border-color:var(--teal);}
+  .fb-card.in-view{opacity:1; transform:translateY(0);}
+  .fb-top{display:flex; align-items:center; justify-content:space-between;}
+  .fb-stars{color:var(--amber); font-size:13px; letter-spacing:2px;}
+  .fb-source{font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--slate); text-transform:uppercase; letter-spacing:0.5px;}
+  .fb-quote{font-size:14px; color:var(--slate-light); font-style:normal; line-height:1.5;}
+  .fb-quote::before{content:'“'; color:var(--teal);}
+  .fb-quote::after{content:'”'; color:var(--teal);}
+  .fb-foot{display:flex; align-items:center; justify-content:space-between; margin-top:auto; padding-top:6px; border-top:1px solid var(--line);}
+  .fb-name{font-family:'Space Grotesk',sans-serif; font-size:13px; color:var(--parchment); font-weight:600;}
+  .fb-meta{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--slate);}
+  .fb-view{
+    font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--slate);
+    text-transform:uppercase; letter-spacing:0.5px; margin-top:2px;
+    display:flex; align-items:center; gap:4px;
+    opacity:0.7; transition:opacity .2s ease, color .2s ease;
+  }
+  a.fb-card:hover .fb-view{opacity:1; color:var(--teal);}
+
+  /* ---------- Stack section ---------- */
+  .stack-section{padding:60px 0;}
+  .stack-grid{display:flex; flex-wrap:wrap; gap:10px; margin-top:24px;}
+  .stack-item{
+    font-family:'JetBrains Mono',monospace; font-size:13px;
+    border:1px solid var(--line); padding:9px 16px; border-radius:var(--radius);
+    color:var(--slate-light);
+    cursor:pointer; user-select:none;
+    transition:border-color .2s ease, color .2s ease, background .2s ease, transform .15s ease;
+  }
+  .stack-item:hover{
+    border-color:var(--teal); color:var(--teal);
+    background:rgba(45,212,191,0.06);
+    transform:translateY(-2px);
+  }
+  .stack-item:active, .stack-item.tapped{
+    border-color:var(--amber); color:var(--amber);
+    background:rgba(245,166,35,0.1);
+    transform:translateY(0) scale(0.97);
+  }
+
+  /* ---------- Footer / contact ---------- */
+  .contact-section{padding:80px 0 60px; border-top:1px solid var(--line); margin-top:20px;}
+  .contact-box{
+    background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+    padding:44px; text-align:left;
+  }
+  .contact-box .ticket-id{margin-bottom:14px; display:block;}
+  .contact-box h2{font-size:26px; margin-bottom:12px;}
+  .contact-box p{color:var(--slate-light); max-width:480px; margin-bottom:26px;}
+  footer{padding:30px 0 60px; font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--slate); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="brand">FK<span>//</span>OPS-QUEUE</div>
+    <div class="topbar-right">
+      <a href="https://www.linkedin.com/in/faisal-kamran-3828271b3" target="_blank" rel="noopener" class="icon-link">LinkedIn ↗</a>
+      <a href="https://www.trustpilot.com/review/vio.com?search=Faisal" target="_blank" rel="noopener" class="icon-link">Trustpilot ↗</a>
+      <div class="status-pill"><span class="dot"></span> OPEN TO NEW ROLES</div>
+    </div>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">SUPPORT OPERATIONS &amp; CUSTOMER EXPERIENCE</div>
+    <h1>Faisal Kamran resolves the tickets<br>everyone else <em>escalates</em>.</h1>
+    <p class="role">Senior Support Consultant based in Kolkata, India — five years across refunds, rebookings, community moderation, and high-volume queues.</p>
+    <p class="sub">B.Com (Hons) in Accounting &amp; Finance, University of Calcutta. Bilingual in English and Hindi. Currently looking toward Team Lead roles at the intersection of CS operations and finance.</p>
+    <div class="hero-cta">
+      <a href="#queue" class="btn btn-primary">View case queue ↓</a>
+      <a href="#feedback" class="btn btn-ghost">Read feedback →</a>
+      <a href="#contact" class="btn btn-ghost">Open a ticket →</a>
+    </div>
+  </div>
+</section>
+
+<section class="metrics">
+  <div class="wrap" style="display:block;">
+    <div style="border:1px solid var(--line); border-radius:3px; background:var(--panel); padding:26px 30px; position:relative;">
+      <span class="ticket-id" style="display:block; margin-bottom:10px;">INTERNAL NOTE · PINNED</span>
+      <p style="font-size:15px; line-height:1.65; color:var(--slate-light); margin:0;">
+        Senior Customer Support Representative <span style="color:var(--slate);">(read: I've seen some things, man)</span>. I've logged enough hours on the front lines of customer service to earn a PhD in Human Patience and a minor in Keyboard Smashing Prevention. My expertise is in handling the most challenging tickets — the ones that have been passed around like a hot potato — and bringing them to a swift, happy conclusion. I'm proficient in all customer-facing channels, including phone, email, chat, and the ancient art of the carrier pigeon (in a pinch). I'm the calm in your storm, the answer to your FAQ, and the reason you haven't thrown your computer out the window.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="metrics">
+  <div class="wrap">
+    <div class="metric"><div class="num">29+</div><div class="label">Trustpilot mentions, in a year</div></div>
+    <div class="metric"><div class="num">90%+</div><div class="label">Call resolution rate, Amazon</div></div>
+    <div class="metric"><div class="num">100K+</div><div class="label">Community members moderated</div></div>
+    <div class="metric"><div class="num">1.3M+</div><div class="label">Units sold on title under moderation</div></div>
+    <div class="metric"><div class="num">100%</div><div class="label">First response SLA</div></div>
+    <div class="metric"><div class="num">94%</div><div class="label">CSAT</div></div>
+  </div>
+</section>
+
+<section class="queue-section" id="queue">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Case queue</h2>
+      <div class="count">5 tickets · all resolved</div>
+    </div>
+
+    <div class="ticket" data-ticket>
+      <div class="ticket-head" data-toggle>
+        <div class="ticket-title-group">
+          <span class="ticket-id">TICKET-001</span>
+          <span class="ticket-title">Creative problem-solving, at no extra $</span>
+          <span class="ticket-company">SupportYourApp — Vio.com account</span>
+        </div>
+        <div class="ticket-meta">
+          <span class="tag tag-priority-high">High priority</span>
+          <span class="tag tag-resolved">Resolved</span>
+          <span class="chevron">▾</span>
+        </div>
+      </div>
+      <div class="ticket-body">
+        <div class="ticket-body-inner">
+          <div>
+            <h4>Context</h4>
+            <p>A consistent pattern across the caseload: finding the guest a real resolution without the company absorbing an unnecessary cost.</p>
+            <h4>Resolution</h4>
+            <div class="resolution-log">
+              <p>Refunds secured on non-refundable bookings, compensation won on hotel dissatisfaction cases, and check-in issues resolved live, on the spot — including a full refund on a <a href="https://www.trustpilot.com/reviews/69afd9353b31a0ffd90fbcad" target="_blank" rel="noopener" style="color:var(--teal);">70% policy</a> under exceptional circumstances, and a non-refundable booking overturned during a <a href="https://www.trustpilot.com/reviews/69a752e81c45ae8950caedb8" target="_blank" rel="noopener" style="color:var(--teal);">family medical emergency</a>.</p>
+            </div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-row"><span class="n">29+</span><span class="d">named Trustpilot mentions in one year</span></div>
+            <div class="stat-row"><span class="n">1st</span><span class="d">agent selected for the Refunds team</span></div>
+            <div class="stat-row"><span class="n">£0</span><span class="d">added cost to the company across these resolutions</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ticket" data-ticket>
+      <div class="ticket-head" data-toggle>
+        <div class="ticket-title-group">
+          <span class="ticket-id">TICKET-002</span>
+          <span class="ticket-title">Moderating communities at scale</span>
+          <span class="ticket-company">2K Games — freelance content moderation</span>
+        </div>
+        <div class="ticket-meta">
+          <span class="tag tag-priority-sustained">Sustained</span>
+          <span class="tag tag-resolved">Resolved</span>
+          <span class="chevron">▾</span>
+        </div>
+      </div>
+      <div class="ticket-body">
+        <div class="ticket-body-inner">
+          <div>
+            <h4>Context</h4>
+            <p>Freelance moderation across Discord and Steam for a title with a large, high-engagement player base — the kind of environment where policy has to hold up under volume and provocation.</p>
+            <h4>Resolution</h4>
+            <div class="resolution-log">
+              <p>Kept two 50,000-member Discord communities and Steam discussion spaces for a 1.3M+ unit title inside policy without needing to lock threads down.</p>
+            </div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-row"><span class="n">2×</span><span class="d">50,000-member Discord communities</span></div>
+            <div class="stat-row"><span class="n">1.3M+</span><span class="d">copies sold on the moderated title</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ticket" data-ticket>
+      <div class="ticket-head" data-toggle>
+        <div class="ticket-title-group">
+          <span class="ticket-id">TICKET-003</span>
+          <span class="ticket-title">Consistency at volume</span>
+          <span class="ticket-company">Amazon — customer support</span>
+        </div>
+        <div class="ticket-meta">
+          <span class="tag tag-priority-med">Standard</span>
+          <span class="tag tag-resolved">Resolved</span>
+          <span class="chevron">▾</span>
+        </div>
+      </div>
+      <div class="ticket-body">
+        <div class="ticket-body-inner">
+          <div>
+            <h4>Context</h4>
+            <p>High-volume phone support where consistency matters more than any single save — the metric that separates good agents from good weeks.</p>
+            <h4>Resolution</h4>
+            <div class="resolution-log">
+              <p>Held call resolution above 90% sustained over the role, not as a one-off spike.</p>
+            </div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-row"><span class="n">90%+</span><span class="d">call resolution rate</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ticket" data-ticket>
+      <div class="ticket-head" data-toggle>
+        <div class="ticket-title-group">
+          <span class="ticket-id">TICKET-004</span>
+          <span class="ticket-title">Owning the graveyard shift</span>
+          <span class="ticket-company">Swiggy — customer support</span>
+        </div>
+        <div class="ticket-meta">
+          <span class="tag tag-priority-med">Standard</span>
+          <span class="tag tag-resolved">Resolved</span>
+          <span class="chevron">▾</span>
+        </div>
+      </div>
+      <div class="ticket-body">
+        <div class="ticket-body-inner">
+          <div>
+            <h4>Context</h4>
+            <p>Night-shift food delivery support — thinner staffing, more time-sensitive complaints, less room to pass a ticket along.</p>
+            <h4>Resolution</h4>
+            <div class="resolution-log">
+              <p>Posted the highest daily ticket resolution count on the graveyard shift, on a queue where most agents' numbers dip.</p>
+            </div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-row"><span class="n">#1</span><span class="d">daily ticket resolution, night shift</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ticket" data-ticket>
+      <div class="ticket-head" data-toggle>
+        <div class="ticket-title-group">
+          <span class="ticket-id">TICKET-005</span>
+          <span class="ticket-title">Where the queue started</span>
+          <span class="ticket-company">Zomato — customer support</span>
+        </div>
+        <div class="ticket-meta">
+          <span class="tag tag-priority-med">Standard</span>
+          <span class="tag tag-resolved">Resolved</span>
+          <span class="chevron">▾</span>
+        </div>
+      </div>
+      <div class="ticket-body">
+        <div class="ticket-body-inner">
+          <div>
+            <h4>Context</h4>
+            <p>Early support role handling day-to-day order and delivery issues for Zomato customers — the ground floor where the habits in every ticket above were built.</p>
+            <h4>Resolution</h4>
+            <div class="resolution-log">
+              <p>Built the fundamentals of fast, calm resolution that carried through into every higher-stakes queue since.</p>
+            </div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-row"><span class="n">01</span><span class="d">first entry in the queue</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="feedback-section" id="feedback">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Feedback log</h2>
+      <div class="count">Unprompted, verified Trustpilot reviews · click a card to view in full</div>
+    </div>
+    <div class="feedback-cta-row">
+      <a href="https://www.trustpilot.com/review/vio.com?search=Faisal" target="_blank" rel="noopener" class="btn btn-ghost">Read all reviews on Trustpilot →</a>
+      <a href="https://www.linkedin.com/in/faisal-kamran-3828271b3" target="_blank" rel="noopener" class="btn btn-ghost">Connect on LinkedIn →</a>
+    </div>
+
+    <div class="feedback-grid">
+      <a href="https://www.trustpilot.com/reviews/6a326ea2e92206a17a9353b4" target="_blank" rel="noopener" class="fb-card" data-fb>
+        <div class="fb-top"><span class="fb-stars">★★★★★</span><span class="fb-source">Trustpilot</span></div>
+        <p class="fb-quote">Turned a stressful situation into a genuinely positive experience — kept me updated at every step during a hotel dispute in Lugano.</p>
+        <div class="fb-foot"><span class="fb-name">J.Y.</span><span class="fb-meta">GB · Jun 2026</span></div>
+      <span class="fb-view">View full review ↗</span>
+      </a>
+
+      <a href="https://www.trustpilot.com/reviews/69ad7e3accf562d1cfd36b1f" target="_blank" rel="noopener" class="fb-card" data-fb>
+        <div class="fb-top"><span class="fb-stars">★★★★★</span><span class="fb-source">Trustpilot</span></div>
+        <p class="fb-quote">Very helpful, polite, and understanding — took the time to listen carefully before assisting.</p>
+        <div class="fb-foot"><span class="fb-name">Ella n Helmee</span><span class="fb-meta">MY · Mar 2026</span></div>
+      <span class="fb-view">View full review ↗</span>
+      </a>
+
+      <a href="https://www.trustpilot.com/reviews/69afd9353b31a0ffd90fbcad" target="_blank" rel="noopener" class="fb-card" data-fb>
+        <div class="fb-top"><span class="fb-stars">★★★★★</span><span class="fb-source">Trustpilot</span></div>
+        <p class="fb-quote">Handled our case with compassion and empathy, securing a full refund on a 70% policy under unusual circumstances.</p>
+        <div class="fb-foot"><span class="fb-name">M.A. Sardiwalla</span><span class="fb-meta">ZA · Mar 2026</span></div>
+      <span class="fb-view">View full review ↗</span>
+      </a>
+
+      <a href="https://www.trustpilot.com/reviews/69a9d276d8335441861d4dac" target="_blank" rel="noopener" class="fb-card" data-fb>
+        <div class="fb-top"><span class="fb-stars">★★★★★</span><span class="fb-source">Trustpilot</span></div>
+        <p class="fb-quote">Went above and beyond to secure a refund on a non-refundable booking during a difficult time. Outstanding customer service.</p>
+        <div class="fb-foot"><span class="fb-name">Zaid Sohail</span><span class="fb-meta">PK · Mar 2026</span></div>
+      <span class="fb-view">View full review ↗</span>
+      </a>
+
+      <a href="https://www.trustpilot.com/reviews/69a752e81c45ae8950caedb8" target="_blank" rel="noopener" class="fb-card" data-fb>
+        <div class="fb-top"><span class="fb-stars">★★★★★</span><span class="fb-source">Trustpilot</span></div>
+        <p class="fb-quote">Handled a difficult cancellation tied to a family medical emergency with empathy, courtesy, and excellent follow-through.</p>
+        <div class="fb-foot"><span class="fb-name">Jamil</span><span class="fb-meta">JO · Mar 2026</span></div>
+      <span class="fb-view">View full review ↗</span>
+      </a>
+
+      <a href="https://www.trustpilot.com/reviews/698d018d861ff5c5157a0d52" target="_blank" rel="noopener" class="fb-card" data-fb>
+        <div class="fb-top"><span class="fb-stars">★★★★★</span><span class="fb-source">Trustpilot</span></div>
+        <p class="fb-quote">Spent time across web chat, phone, and email rather than taking the easy route, and got a non-refundable booking changed.</p>
+        <div class="fb-foot"><span class="fb-name">Leanne</span><span class="fb-meta">GB · Feb 2026</span></div>
+      <span class="fb-view">View full review ↗</span>
+      </a>
+
+      <a href="https://www.trustpilot.com/reviews/68b83fb78caad74b83567d7f" target="_blank" rel="noopener" class="fb-card" data-fb>
+        <div class="fb-top"><span class="fb-stars">★★★★★</span><span class="fb-source">Trustpilot</span></div>
+        <p class="fb-quote">Reassured me a booking was honoured despite a website error, and followed up with the official confirmation number.</p>
+        <div class="fb-foot"><span class="fb-name">Grace H.</span><span class="fb-meta">CA · Sep 2025</span></div>
+      <span class="fb-view">View full review ↗</span>
+      </a>
+
+      <a href="https://www.trustpilot.com/reviews/68b41ce4fe57ac2eebba7318" target="_blank" rel="noopener" class="fb-card" data-fb>
+        <div class="fb-top"><span class="fb-stars">★★★★★</span><span class="fb-source">Trustpilot</span></div>
+        <p class="fb-quote">Kept communication open throughout a difficult hotel experience, and followed up as promised even after being away for two days.</p>
+        <div class="fb-foot"><span class="fb-name">Hina Mistry</span><span class="fb-meta">GB · Aug 2025</span></div>
+      <span class="fb-view">View full review ↗</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="stack-section">
+  <div class="wrap">
+    <div class="section-head"><h2>Goods &amp; services supported</h2></div>
+    <div class="stack-grid">
+      <span class="stack-item">Amazon Orders</span>
+      <span class="stack-item">Amazon Account Recovery (KYC)</span>
+      <span class="stack-item">Amazon Prime (Digital)</span>
+      <span class="stack-item">Food &amp; Beverages (FMCG)</span>
+      <span class="stack-item">Hotel Bookings</span>
+      <span class="stack-item">Discord Server</span>
+      <span class="stack-item">Steam Reviews</span>
+    </div>
+  </div>
+</section>
+
+<section class="stack-section">
+  <div class="wrap">
+    <div class="section-head"><h2>Tools in the stack</h2></div>
+    <div class="stack-grid">
+      <span class="stack-item">Zendesk</span>
+      <span class="stack-item">Aircall</span>
+      <span class="stack-item">CC Connect</span>
+      <span class="stack-item">AC3</span>
+      <span class="stack-item">Slack</span>
+      <span class="stack-item">MS Office Suite</span>
+      <span class="stack-item">Google Suite</span>
+      <span class="stack-item">Discord Moderation Tools</span>
+      <span class="stack-item">Snowflake</span>
+      <span class="stack-item">Other CRM software</span>
+    </div>
+  </div>
+</section>
+
+<section class="contact-section" id="contact">
+  <div class="wrap">
+    <div class="contact-box">
+      <span class="ticket-id">TICKET-006 · NEW</span>
+      <h2>Open a ticket.</h2>
+      <p>Looking for a Senior Support Consultant, Team Lead, or CS/content moderation hire? This queue has room for one more.</p>
+      <a href="https://mail.google.com/mail/?view=cm&fs=1&to=faisalkamran80@gmail.com" target="_blank" rel="noopener" class="btn btn-primary">Email Faisal →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%;">
+    <span>Kolkata, West Bengal, India</span>
+    <span>© 2026 Faisal Kamran</span>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('[data-toggle]').forEach(head => {
+    head.addEventListener('click', () => {
+      const ticket = head.closest('[data-ticket]');
+      const body = ticket.querySelector('.ticket-body');
+      const isOpen = ticket.classList.contains('open');
+      if(isOpen){
+        ticket.classList.remove('open');
+        body.style.maxHeight = null;
+      } else {
+        ticket.classList.add('open');
+        body.style.maxHeight = body.scrollHeight + 'px';
+      }
+    });
+  });
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in-view'); });
+  }, {threshold:0.1});
+  document.querySelectorAll('.stack-item').forEach(item => {
+    item.addEventListener('click', () => {
+      item.classList.add('tapped');
+      setTimeout(() => item.classList.remove('tapped'), 220);
+    });
+  });
+
+  document.querySelectorAll('[data-ticket]').forEach(t => io.observe(t));
+  document.querySelectorAll('[data-fb]').forEach(t => io.observe(t));
+</script>
+
+</body>
+</html>
